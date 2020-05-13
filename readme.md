@@ -55,11 +55,22 @@ eventsource_weather.ex - receives sensors stream data and decodes the json xml v
 - mqtt_protocol.ex - Defines Packet protocol and provides implementations for bus Messages;
 
 #### 2. Message Broker module:
-
+  1. The start point mqtt_broker_application.ex with the module name MqttBroker.Application.  It starts these modules:
+  - MessageBroadcast - pubslishes to all subscribers of the topic the data received from sensors and stores the list of subscribers.
+  - ConnectionSupervisor - creates a process for the connected subscribers to send and receive packages using TCP protocol and these are encoded using MQTT protocol.
+  - MqttBrokerServer - creates a TCP server to listen to incomming client connections.
+  
+  2. Util modules:
+  mqtt_util.ex - encoding packages using MQTT protocol
+  
+  3. Other modules: 
+  connection_event.ex - the process created after each client connection to receive encoded  mqtt packages. It can recognize the following package types: PUBLISH, SUBSCRIBE, UNSUBSCRIBE. 
+  
+The MQTT protocol  for encoding and decoding packages are the same as in the Publishers module.
 
 #### 3. Subscribers:
 
-1. First start point is mqtt_client.ex with the module name MqttClient.Application. This starts these modules:
+1. The start point is mqtt_client.ex with the module name MqttClient.Application. This starts these modules:
 - MessageStatus module - joins the sensors data and calculates the average values of the every sensor.
 - WeatherPrediction - joins the sensor data and makes a weather forecast;
 - MqttAdapter - joins the sensor data and sends them further to the port 7777 encoded as an Mqtt packages. This works as a virtual sensor. 
