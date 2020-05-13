@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="meeseeks" type="mix">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/meeseeks/lib" />
+      <root url="file://$PROJECT_DIR$/deps/meeseeks/src" />
+    </SOURCES>
+  </library>
+</component>

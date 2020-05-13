@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ex_mqtt" type="mix">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/ex_mqtt/lib" />
+    </SOURCES>
+  </library>
+</component>

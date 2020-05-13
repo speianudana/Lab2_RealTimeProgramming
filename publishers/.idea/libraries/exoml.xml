@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="exoml" type="mix">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/_build/dev/lib/exoml/ebin" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/deps/exoml/lib" />
+    </SOURCES>
+  </library>
+</component>
