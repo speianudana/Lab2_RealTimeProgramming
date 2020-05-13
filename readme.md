@@ -1,6 +1,6 @@
 ## Laboratory 2
 
-The basic requirements are:
+### The basic requirements are:
 - Process events as soon as they come
 - Have 3 groups of workers parsing and averaging the measurements and 3 supervisors, or one, whatever, depends on how you will tackle the publishers part
 - Dynamically change the number of actors (up and down) depending on the load
@@ -20,3 +20,14 @@ For python script:
 ```
 python3 receiveData.py
 ```
+
+### How it works:
+
+#### 1. Publishers module:
+
+
+#### 2. Message Broker module:
+
+
+#### 3. Subscribers module:
+
