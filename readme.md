@@ -16,15 +16,43 @@ For all 3 elixir projects:
 mix deps.get
 iex -S mix
 ```
-For python script:
+For python script(receives data from MQTT adapter):
 ```
 python3 receiveData.py
 ```
 
 ### How it works:
 
-#### 1. Publishers module:
+#### 1. Publishers:
+1. The start point is  main_application.ex file with the module name Lab2.Application. The Application instance starts 6 processes(actors): 
+- MqttClient - publishes the data to broker(using TCP protocol);
+- SensorSupervisor - starts dynamically the actors to analyse weather data from all 3 sources;
+- Group1(EventSourceWeather module) - receives the stream data from the "http://localhost:4000/iot";
+- Group2(EventSourceWeather module) - receives the stream data from the "http://localhost:4000/sensors";
+- Group3(EventSourceWeather module) - receives the stream data from the "http://localhost:4000/legacy_sensors";
+- LoadData - increases and decreases the number of actors depending on the load, also receives the data from all 3 stream sources(Group1, Group2, Group3);
 
+2. Util modules:
+mqtt_util.ex - has the encode_packet method that encodes the message data and topic in a mqtt packet.
+```
+def encode_packet(data) do
+    message = Message.publish("weather sensors", data, 0, 0, 0)
+    Packet.encode(message)
+  end
+```
+load_data_util.ex - contains methods for adding actors,delete actors, checking the number of actors for the load.
+message_parse_util.ex - calculates the average of two values from the same type of sensor per message.
+
+3. Other modules: 
+sensor_event.ex - worker thread that calculates the average and it's  number is increased or decreased depending on the streaming load. Data is sent to Message Broker using MqttClient module.
+
+eventsource_weather.ex - receives sensors stream data and decodes the json xml values from stream. 
+
+4. MQTT modules:
+- mqtt_decoder.ex - Provides functions for decoding bytes(binary) to Message structs;
+- mqtt_encoder.ex - Provides functions for encoding Message structs to bytes(binary);
+- mqtt_message.ex - Provides the structs and constructors for different kinds of message packets in the MQTT protocol;
+- mqtt_protocol.ex - Defines Packet protocol and provides implementations for bus Messages;
 
 #### 2. Message Broker module:
 
